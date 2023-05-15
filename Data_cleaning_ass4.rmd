@@ -1,0 +1,61 @@
+---
+title: "Assignment_3"
+output: html_document
+date: "2023-04-20"
+---
+Reading the data to a dataframe
+```{R}
+library(readr)
+real_data <- read_csv("AlienData.csv")
+```
+
+Cleaning the data
+```{R}
+#subseting so we only have session 1 and condition 2
+real_data <- subset(real_data, session == 1 & condition == 2)
+
+#making a new column for each feature
+real_data$eyes <- substr(real_data$stimulus, 1, 1)
+real_data$teeth <- substr(real_data$stimulus, 2, 2)
+real_data$spots <- substr(real_data$stimulus, 3, 3)
+real_data$arms <- substr(real_data$stimulus, 4, 4)
+real_data$color <- substr(real_data$stimulus, 5, 5)
+
+#removing colums we don't need
+real_data$condition = NULL
+real_data$cycle = NULL
+real_data$category = NULL
+real_data$communication = NULL
+real_data$nutricious = NULL
+real_data$complement = NULL
+real_data$RT = NULL
+real_data$test = NULL
+real_data$cumulative = NULL
+real_data$motivation = NULL
+real_data$session = NULL
+real_data$competence = NULL
+
+#Recoding the response column so it only says if the alien is dangerous or not
+real_data$response <- ifelse(real_data$response == 1 | real_data$response == 2, 0, 1)
+```
+
+Writhing the data to a csv
+```{R}
+write.csv(real_data, "clean_empirical_data.csv")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
